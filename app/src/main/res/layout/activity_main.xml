@@ -40,8 +40,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/ll_action_buttons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fl_drawing_view_container">
 
         <ImageButton
@@ -132,9 +132,8 @@
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-        <!--TODO(Step 1 - We have added an image button for selecting the image from your phone.)-->
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
         <ImageButton
             android:id="@+id/ib_gallery"
@@ -144,6 +143,15 @@
             android:contentDescription="image"
             android:scaleType="fitXY"
             android:src="@drawable/ic_gallery" />
+        <!--TODO(Step 1 : Adding an option for undo)-->
+        <ImageButton
+            android:id="@+id/ib_undo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_undo"
+            android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/ib_brush"
@@ -153,5 +161,13 @@
             android:contentDescription="image"
             android:scaleType="fitXY"
             android:src="@drawable/ic_brush" />
+
+        <ImageButton
+            android:id="@+id/ib_save"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:contentDescription="image"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_save" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -34,6 +34,9 @@ class DrawingView(context: Context,attrs:AttributeSet): View(context,attrs) {
 
     private val mPaths = ArrayList<CustomPath>() // ArrayList for Paths
 
+    // TODO(Step 2 : A variable for array list of undo paths.)
+    private val mUndoPaths = ArrayList<CustomPath>()
+
     init {
         setUpDrawing()
     }
@@ -94,8 +97,8 @@ class DrawingView(context: Context,attrs:AttributeSet): View(context,attrs) {
         }
 
         if (!mDrawPath!!.isEmpty) {
-            mDrawPaint?.strokeWidth = mDrawPath!!.brushThickness
-            mDrawPaint?.color = mDrawPath!!.color
+            mDrawPaint!!.strokeWidth = mDrawPath!!.brushThickness
+            mDrawPaint!!.color = mDrawPath!!.color
             canvas.drawPath(mDrawPath!!, mDrawPaint!!)
         }
     }
@@ -110,18 +113,18 @@ class DrawingView(context: Context,attrs:AttributeSet): View(context,attrs) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                mDrawPath?.color = color
-                mDrawPath?.brushThickness = mBrushSize
+                mDrawPath!!.color = color
+                mDrawPath!!.brushThickness = mBrushSize
 
-                mDrawPath?.reset() // Clear any lines and curves from the path, making it empty.
-                mDrawPath?.moveTo(
+                mDrawPath!!.reset() // Clear any lines and curves from the path, making it empty.
+                mDrawPath!!.moveTo(
                     touchX,
                     touchY
                 ) // Set the beginning of the next contour to the point (x,y).
             }
 
             MotionEvent.ACTION_MOVE -> {
-                mDrawPath?.lineTo(
+                mDrawPath!!.lineTo(
                     touchX,
                     touchY
                 ) // Add a line from the last point to the specified point (x,y).
@@ -150,7 +153,7 @@ class DrawingView(context: Context,attrs:AttributeSet): View(context,attrs) {
             TypedValue.COMPLEX_UNIT_DIP, newSize,
             resources.displayMetrics
         )
-        mDrawPaint?.strokeWidth = mBrushSize
+        mDrawPaint!!.strokeWidth = mBrushSize
     }
 
     /**
@@ -161,7 +164,22 @@ class DrawingView(context: Context,attrs:AttributeSet): View(context,attrs) {
      */
     fun setColor(newColor: String) {
         color = Color.parseColor(newColor)
-        mDrawPaint?.color = color
+        mDrawPaint!!.color = color
+    }
+
+    // TODO(Step 3 : A function to add the paths for undo option.)
+    /**
+     * This function is called when the user selects the undo
+     * command from the application. This function removes the
+     * last stroke input by the user depending on the
+     * number of times undo has been activated.
+     */
+    fun onClickUndo() {
+        if (mPaths.size > 0) {
+
+            mUndoPaths.add(mPaths.removeAt(mPaths.size - 1))
+            invalidate() // Invalidate the whole view. If the view is visible
+        }
     }
     internal inner class CustomPath(var color:Int,var brushThickness:Float):Path()
 }
